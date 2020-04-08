@@ -1,0 +1,30 @@
+version: '3'
+services:
+  insurance_env:
+    image: kwhadocker/insurance-requirements:latest
+    environment:
+      - USER
+      - POSTGRES_USER=root
+      - POSTGRES_PASS=kwh
+    ports:
+      # Jupyter default port
+      - "8888:8888"
+      # Postgres default port
+      - "5432:5432"
+    # Modify any of the below host paths if your corresponding files are not in ~/
+    # HOST_PATH:CONTAINER_PATH
+    volumes:
+      # Jupyter notebook password and config files
+      - ~/.jupyter:/root/.jupyter
+      # Insurance workspace for input files
+      - ~/insurance-workspace:/root/insurance-workspace
+      # Insurance and marvin codebases
+      - ~/insurance/:/root/insurance
+      # SSH agent to access VPN
+      - ~/.ssh:/root/.ssh
+      # Git permissions
+      - ~/.gitconfig:/root/.gitconfig
+      # Postgres data directory for DB permanence
+      - ~/kwha_pgdata:/var/lib/postgresql/11/main
+    # Allows for interactive sessions
+    tty: true #

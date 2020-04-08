@@ -1,4 +1,3 @@
-  
 FROM kwhadocker/ubuntu18-postgres11:latest
 
 # Move to root
@@ -48,4 +47,3 @@ RUN pip --no-cache-dir install -r buildreqs/requirements.txt
 
 # Run bash on startup
 CMD ["/bin/bash"]
-
