@@ -2,7 +2,7 @@ version: '3'
 services:
   insurance_env:
     network_mode: host
-    image: kwhadocker/insurance-requirements:latest
+    image: kwhadocker/data-env:latest
     environment:
       - USER
       # I may have to pass in all the postgres env vars like user and pw here
