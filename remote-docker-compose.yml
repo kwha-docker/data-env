@@ -1,6 +1,6 @@
 version: '3'
 services:
-  insurance_env:
+  data_env:
     network_mode: host
     image: kwhadocker/data-env:latest
     environment:
