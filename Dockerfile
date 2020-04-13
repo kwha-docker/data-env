@@ -10,10 +10,13 @@ WORKDIR /root/
 ## TODO KE 
 # will python-dev, python-tk and python-pip still install python2?
 # can we install python3 here?
-# why aren't we installing postgres here?
 # why are we installing vim, curl, and git if we're starting with
 # ubuntu18???
-#
+
+## Prerequisite: Updating apt-utils
+RUN apt-get update && apt-get install -y --no-install-recommends apt-utils
+
+# Next: Continuing with the rest of the apt packages
 RUN apt-get update && apt-get install -y \
         strace \
         build-essential \
@@ -81,6 +84,8 @@ RUN python --version
 # Will also run buildreqs/marvin/requirements.txt since
 # the insurance requirements file will point to marvin file
 # This layer costs 1.28GB - not sure how to fix this issue.
+# explicitly install numpy first?
+RUN pip install numpy==1.11.0
 RUN pip --no-cache-dir install -r buildreqs/marvin-requirements.txt
 RUN pip --no-cache-dir install -r buildreqs/insurance-requirements.txt
 
