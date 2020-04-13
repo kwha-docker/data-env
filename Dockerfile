@@ -38,20 +38,13 @@ RUN apt-get update && apt-get install -y \
         libgeos-c1v5 \
         libgeos-dev && \
     apt-get autoremove -y && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* && \
-    mkdir -p buildreqs
+        apt-get clean && \
+        rm -rf /var/lib/apt/lists/* && \
+    mkdir -p buildreqs/requirements
 
 # Copy requirement files
 COPY marvin-requirements.txt buildreqs/marvin-requirements.txt
 COPY insurance-requirements.txt buildreqs/insurance-requirements.txt
-
-# Install requirements
-# Will also run buildreqs/marvin/requirements.txt since
-# the insurance requirements file will point to marvin file
-# This layer costs 1.28GB - not sure how to fix this issue.
-RUN pip --no-cache-dir install -r buildreqs/marvin-requirements.txt
-RUN pip --no-cache-dir install -r buildreqs/insurance-requirements.txt
 
 # Python 3 setup
 # KE TODO do we need this python3 setup or can we just install it
@@ -78,6 +71,14 @@ RUN python3.5 -m pip install wheel
 RUN ln -f /usr/bin/python3.5  /usr/bin/python
 
 RUN python --version
+
+
+# Install requirements
+# Will also run buildreqs/marvin/requirements.txt since
+# the insurance requirements file will point to marvin file
+# This layer costs 1.28GB - not sure how to fix this issue.
+RUN pip --no-cache-dir install -r buildreqs/marvin-requirements.txt
+RUN pip --no-cache-dir install -r buildreqs/insurance-requirements.txt
 
 # Do we need to / want to create an ENTRYPOINT HERE?
 
