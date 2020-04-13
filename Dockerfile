@@ -55,6 +55,10 @@ COPY insurance-requirements.txt buildreqs/insurance-requirements.txt
 # We need Python 3.5 because it's the last version that supports Pandas 0.18.
 # Python 3.5 is no longer included in the default apt-get repo in Ubuntu 18.04, so we
 # add the "Deadsnakes" repo where apt-get can find older Python version:
+## KE edit 2020-04-12
+# Adding software-properties-common to get add-apt-repository to work
+RUN apt-get update && apt-get install -y software-properties-common && apt-get update
+
 RUN add-apt-repository ppa:deadsnakes/ppa
 RUN apt-get update
 
