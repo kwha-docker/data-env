@@ -7,7 +7,7 @@ WORKDIR /root/
 # Install GEOS packages needed for basemap
 # This layer costs 487MB in total
 # Combined apt-get update install lines and added one more cleaning functio
-## TODO KE 
+## TODO KE
 # will python-dev, python-tk and python-pip still install python2?
 # can we install python3 here?
 # why are we installing vim, curl, and git if we're starting with
@@ -20,6 +20,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends apt-utils
 RUN apt-get update && apt-get install -y \
         strace \
         build-essential \
+        bash-completion \
         lsof \
         vim \
         curl \
