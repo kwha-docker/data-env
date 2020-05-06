@@ -28,6 +28,7 @@ RUN apt-get update && apt-get install -y \
         mc \
         sysstat \
         iotop \
+        htop \
         dstat \
         iptraf \
         screen \
@@ -40,6 +41,7 @@ RUN apt-get update && apt-get install -y \
         python-tk \
         python-pip \
         libgeos-c1v5 \
+        tig \
         libgeos-dev && \
     apt-get autoremove -y && \
         apt-get clean && \
