@@ -1,4 +1,4 @@
-FROM kwhadocker/ubuntu18-postgres11:v2
+FROM kwhadocker/ubuntu18-postgres11:v4
 
 # Move to root
 WORKDIR /root/
@@ -63,10 +63,9 @@ COPY insurance-requirements.txt buildreqs/insurance-requirements.txt
 RUN apt-get update && apt-get install -y software-properties-common && apt-get update
 
 RUN add-apt-repository ppa:deadsnakes/ppa
-RUN apt-get update
 
 # Install python 3.5 from deadsnakes
-RUN apt-get install -y libpq-dev build-essential python3.5 python3.5-dev python3-pip python3.5-venv
+RUN apt-get update && apt-get install -y libpq-dev build-essential python3.5 python3.5-dev python3-pip python3.5-venv
 
 # update pip
 RUN python3.5 -m pip install pip --upgrade
