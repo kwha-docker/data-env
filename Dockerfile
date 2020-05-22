@@ -1,4 +1,4 @@
-FROM kwhadocker/ubuntu18-postgres11:v2
+FROM kwhadocker/ubuntu18-postgres11:v4
 
 # Move to root
 WORKDIR /root/
@@ -7,7 +7,7 @@ WORKDIR /root/
 # Install GEOS packages needed for basemap
 # This layer costs 487MB in total
 # Combined apt-get update install lines and added one more cleaning functio
-## TODO KE
+## TODO KE 
 # will python-dev, python-tk and python-pip still install python2?
 # can we install python3 here?
 # why are we installing vim, curl, and git if we're starting with
@@ -20,7 +20,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends apt-utils
 RUN apt-get update && apt-get install -y \
         strace \
         build-essential \
-        bash-completion \
         lsof \
         vim \
         curl \
@@ -28,7 +27,6 @@ RUN apt-get update && apt-get install -y \
         mc \
         sysstat \
         iotop \
-        htop \
         dstat \
         iptraf \
         screen \
@@ -41,7 +39,6 @@ RUN apt-get update && apt-get install -y \
         python-tk \
         python-pip \
         libgeos-c1v5 \
-        tig \
         libgeos-dev && \
     apt-get autoremove -y && \
         apt-get clean && \
