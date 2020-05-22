@@ -39,6 +39,7 @@ RUN apt-get update && apt-get install -y \
         python-dev \
         chromium-chromedriver \
         python-tk \
+        python3-tk \
         python-pip \
         libgeos-c1v5 \
         tig \
