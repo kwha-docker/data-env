@@ -68,7 +68,7 @@ RUN add-apt-repository ppa:deadsnakes/ppa
 
 # Install python 3.5 from deadsnakes
 RUN apt-get update && apt-get install -y libpq-dev build-essential python3.5 python3.5-dev python3-pip python3.5-venv
-RUN apt-get update && apt-get install -y python3.5-tk
+RUN apt-get update && apt-get install -y libpython3.5-tk
 
 # update pip
 RUN python3.5 -m pip install pip --upgrade
