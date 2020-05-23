@@ -19,6 +19,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends apt-utils
 # Next: Continuing with the rest of the apt packages
 RUN apt-get update && apt-get install -y \
         strace \
+        bash-completion \
         build-essential \
         lsof \
         vim \
@@ -28,6 +29,7 @@ RUN apt-get update && apt-get install -y \
         sysstat \
         iotop \
         dstat \
+        htop \
         iptraf \
         screen \
         tmux \
@@ -36,8 +38,11 @@ RUN apt-get update && apt-get install -y \
         libffi-dev \
         python-dev \
         chromium-chromedriver \
+        python-tk \
+        python3-tk \
         python3.5-tk \
         python-pip \
+        tig \
         libgeos-c1v5 \
         libgeos-dev && \
     apt-get autoremove -y && \
