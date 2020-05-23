@@ -38,9 +38,6 @@ RUN apt-get update && apt-get install -y \
         libffi-dev \
         python-dev \
         chromium-chromedriver \
-        python-tk \
-        python3-tk \
-        python3.5-tk \
         python-pip \
         tig \
         libgeos-c1v5 \
@@ -68,10 +65,9 @@ COPY insurance-requirements.txt buildreqs/insurance-requirements.txt
 RUN apt-get update && apt-get install -y software-properties-common && apt-get update
 
 RUN add-apt-repository ppa:deadsnakes/ppa
-RUN apt-get update
 
 # Install python 3.5 from deadsnakes
-RUN apt-get install -y libpq-dev build-essential python3.5 python3.5-dev python3-pip python3.5-venv
+RUN apt-get update && apt-get install -y python3.5-tk libpq-dev build-essential python3.5 python3.5-dev python3-pip python3.5-venv
 
 # update pip
 RUN python3.5 -m pip install pip --upgrade
