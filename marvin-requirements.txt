@@ -1,5 +1,6 @@
 alembic==0.7.6
 altgraph==0.16.1
+awscli==1.15.60
 astroid==1.2.0
 beaker==1.10.0
 beautifulsoup4==4.6.0

@@ -19,6 +19,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends apt-utils
 # Next: Continuing with the rest of the apt packages
 RUN apt-get update && apt-get install -y \
         strace \
+        bash-completion \
         build-essential \
         lsof \
         vim \
@@ -28,6 +29,7 @@ RUN apt-get update && apt-get install -y \
         sysstat \
         iotop \
         dstat \
+        htop \
         iptraf \
         screen \
         tmux \
@@ -37,7 +39,9 @@ RUN apt-get update && apt-get install -y \
         python-dev \
         chromium-chromedriver \
         python-tk \
+        python3-tk \
         python-pip \
+        tig \
         libgeos-c1v5 \
         libgeos-dev && \
     apt-get autoremove -y && \
@@ -66,6 +70,7 @@ RUN add-apt-repository ppa:deadsnakes/ppa
 
 # Install python 3.5 from deadsnakes
 RUN apt-get update && apt-get install -y libpq-dev build-essential python3.5 python3.5-dev python3-pip python3.5-venv
+RUN apt-get update && add-apt-repository ppa:deadsnakes/ppa && apt-get install -y libpython3.5-tk
 
 # update pip
 RUN python3.5 -m pip install pip --upgrade
