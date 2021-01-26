@@ -72,9 +72,9 @@ RUN add-apt-repository ppa:deadsnakes/ppa
 RUN apt-get update && apt-get install -y libpq-dev build-essential python3.5 python3.5-dev python3-pip python3.5-venv
 RUN apt-get update && add-apt-repository ppa:deadsnakes/ppa && apt-get install -y libpython3.5-tk
 
-# update pip to latest version with old dependency resolver
+# update pip to latest version that still includes the old dependency resolver.
 # camelot-py currently requires numpy>=1.13.3 and pandas>=0.23.4
-# which causes
+# which causes the new dependency resolver to fail.
 # TODO switch back to latest version of pip this once our dependency graph is stable.
 # RUN python3.5 -m pip install pip --upgrade
 RUN python3.5 -m pip install pip==20.3.3
