@@ -72,8 +72,12 @@ RUN add-apt-repository ppa:deadsnakes/ppa
 RUN apt-get update && apt-get install -y libpq-dev build-essential python3.5 python3.5-dev python3-pip python3.5-venv
 RUN apt-get update && add-apt-repository ppa:deadsnakes/ppa && apt-get install -y libpython3.5-tk
 
-# update pip
-RUN python3.5 -m pip install pip --upgrade
+# update pip to latest version that still includes the old dependency resolver.
+# camelot-py currently requires numpy>=1.13.3 and pandas>=0.23.4
+# which causes the new dependency resolver to fail.
+# TODO switch back to latest version of pip this once our dependency graph is stable.
+# RUN python3.5 -m pip install pip --upgrade
+RUN python3.5 -m pip install pip==20.3.3
 RUN python3.5 -m pip install wheel
 
 # `python` is /usr/bin/python, a symlink. Delete old symlink, make new one.
@@ -89,8 +93,9 @@ RUN python --version
 # the insurance requirements file will point to marvin file
 # This layer costs 1.28GB - not sure how to fix this issue.
 # explicitly install numpy first?
+# TODO remove legacy-resolver once we have stabilized our dependencies, see note above pip upgrade
 RUN pip install numpy==1.11.0
-RUN pip --no-cache-dir install -r buildreqs/marvin-requirements.txt
+RUN pip --no-cache-dir install -r buildreqs/marvin-requirements.txt --use-deprecated=legacy-resolver
 RUN pip --no-cache-dir install -r buildreqs/insurance-requirements.txt
 
 # Do we need to / want to create an ENTRYPOINT HERE?
