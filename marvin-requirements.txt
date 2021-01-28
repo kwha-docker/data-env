@@ -41,7 +41,7 @@ pandas==0.18.1
 patsy==0.5.1
 pbr==1.8.1
 pdfminer.six==20191110
-psutil==3.2.2
+psutil==5.6.6
 psycopg2==2.7.4
 psycopg2-binary==2.7.4
 pvlib==0.6.1
