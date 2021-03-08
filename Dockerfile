@@ -38,6 +38,7 @@ RUN apt-get update && apt-get install -y \
         libffi-dev \
         python-dev \
         chromium-chromedriver \
+        ghostscript \
         python-tk \
         python3-tk \
         python-pip \
