@@ -19,7 +19,7 @@ et-xmlfile==1.0.1
 factory-boy==2.12.0
 Faker==4.0.2
 fixture==1.5.11
-flake8==3.7.9
+flake8==3.9.0
 funcsigs==0.4
 fuzzywuzzy==0.17.0
 GeoAlchemy2==0.4.0
