@@ -97,9 +97,9 @@ RUN python --version
 # This layer costs 1.28GB - not sure how to fix this issue.
 # explicitly install numpy first?
 # TODO remove legacy-resolver once we have stabilized our dependencies, see note above pip upgrade
-RUN pip install numpy==1.11.0
-RUN pip --no-cache-dir install -r buildreqs/marvin-requirements.txt --use-deprecated=legacy-resolver
-RUN pip --no-cache-dir install -r buildreqs/insurance-requirements.txt
+#RUN pip install numpy==1.11.0
+#RUN pip --no-cache-dir install -r buildreqs/marvin-requirements.txt --use-deprecated=legacy-resolver
+#RUN pip --no-cache-dir install -r buildreqs/insurance-requirements.txt
 
 # Do we need to / want to create an ENTRYPOINT HERE?
 
