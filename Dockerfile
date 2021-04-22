@@ -86,6 +86,7 @@ RUN python -m pip install pip --upgrade
 # New one will point to python3.5 so that's the version we'll get when running
 # `python`.
 # RUN ln -f /usr/bin/python3.5  /usr/bin/python
+RUN ln -f /usr/bin/python3.7  /usr/bin/python
 
 RUN python --version
 
