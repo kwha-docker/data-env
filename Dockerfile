@@ -36,11 +36,12 @@ RUN apt-get update && apt-get install -y \
         zsh \
         xfsprogs \
         libffi-dev \
-        python-dev \
+	libpq-dev \
+        python3.7-dev \
         chromium-chromedriver \
         python-tk \
         python3-tk \
-        python-pip \
+        python3-pip \
         tig \
         libgeos-c1v5 \
         libgeos-dev && \
@@ -64,26 +65,27 @@ COPY insurance-requirements.txt buildreqs/insurance-requirements.txt
 # add the "Deadsnakes" repo where apt-get can find older Python version:
 ## KE edit 2020-04-12
 # Adding software-properties-common to get add-apt-repository to work
-RUN apt-get update && apt-get install -y software-properties-common && apt-get update
+#RUN apt-get update && apt-get install -y software-properties-common && apt-get update
 
-RUN add-apt-repository ppa:deadsnakes/ppa
+#RUN add-apt-repository ppa:deadsnakes/ppa
 
 # Install python 3.5 from deadsnakes
-RUN apt-get update && apt-get install -y libpq-dev build-essential python3.5 python3.5-dev python3-pip python3.5-venv
-RUN apt-get update && add-apt-repository ppa:deadsnakes/ppa && apt-get install -y libpython3.5-tk
+#RUN apt-get update && apt-get install -y libpq-dev build-essential python3.5 python3.5-dev python3-pip python3.5-venv
+#RUN apt-get update && add-apt-repository ppa:deadsnakes/ppa && apt-get install -y libpython3.5-tk
 
 # update pip to latest version that still includes the old dependency resolver.
 # camelot-py currently requires numpy>=1.13.3 and pandas>=0.23.4
 # which causes the new dependency resolver to fail.
 # TODO switch back to latest version of pip this once our dependency graph is stable.
 # RUN python3.5 -m pip install pip --upgrade
-RUN python3.5 -m pip install pip==20.3.3
-RUN python3.5 -m pip install wheel
+#RUN python3.5 -m pip install pip==20.3.3
+#RUN python3.5 -m pip install wheel
+RUN python -m pip install pip --upgrade
 
 # `python` is /usr/bin/python, a symlink. Delete old symlink, make new one.
 # New one will point to python3.5 so that's the version we'll get when running
 # `python`.
-RUN ln -f /usr/bin/python3.5  /usr/bin/python
+# RUN ln -f /usr/bin/python3.5  /usr/bin/python
 
 RUN python --version
 
