@@ -37,7 +37,6 @@ RUN apt-get update && apt-get install -y \
         xfsprogs \
         libffi-dev \
 	libpq-dev \
-	libfreetype-dev \
 	libpng-dev \
         python3.7-dev \
         chromium-chromedriver \
