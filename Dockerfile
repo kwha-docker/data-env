@@ -56,6 +56,7 @@ RUN apt-get update && apt-get install -y \
 # Copy requirement files
 COPY marvin-requirements.txt buildreqs/marvin-requirements.txt
 COPY insurance-requirements.txt buildreqs/insurance-requirements.txt
+COPY pvsyst-extraction-requirements.txt buildreqs/insurance-requirements.txt
 
 # Python 3 setup
 # KE TODO do we need this python3 setup or can we just install it
@@ -101,6 +102,7 @@ RUN python3.7 -m pip install pip --upgrade
 RUN python3.7 -m pip install numpy==1.18.5
 RUN python3.7 -m pip --no-cache-dir install -r buildreqs/marvin-requirements.txt # --use-deprecated=legacy-resolver
 RUN python3.7 -m pip --no-cache-dir install -r buildreqs/insurance-requirements.txt
+RUN python3.7 -m pip --no-cache-dir install -r buildreqs/pvsyst-extraction-requirements.txt
 
 # Do we need to / want to create an ENTRYPOINT HERE?
 
