@@ -6,7 +6,7 @@ astroid==1.2.0
 beaker==1.10.0
 beautifulsoup4==4.6.0
 boto==2.46.1
-boto3==1.7.17
+boto3==1.17.57
 camelot-py==0.8.2
 cffi==1.10.0
 configparser==3.7.4
