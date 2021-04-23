@@ -90,7 +90,7 @@ RUN python --version
 # RUN python3.5 -m pip install pip --upgrade
 #RUN python3.5 -m pip install pip==20.3.3
 #RUN python3.5 -m pip install wheel
-RUN python -m pip install pip --upgrade
+RUN python3.7 -m pip install pip --upgrade
 
 # Install requirements
 # Will also run buildreqs/marvin/requirements.txt since
@@ -98,9 +98,9 @@ RUN python -m pip install pip --upgrade
 # This layer costs 1.28GB - not sure how to fix this issue.
 # explicitly install numpy first?
 # TODO remove legacy-resolver once we have stabilized our dependencies, see note above pip upgrade
-RUN pip install numpy==1.18.5
-RUN python -m pip --no-cache-dir install -r buildreqs/marvin-requirements.txt # --use-deprecated=legacy-resolver
-RUN python -m pip --no-cache-dir install -r buildreqs/insurance-requirements.txt
+RUN python3.7 -m pip install numpy==1.18.5
+RUN python3.7 -m pip --no-cache-dir install -r buildreqs/marvin-requirements.txt # --use-deprecated=legacy-resolver
+RUN python3.7 -m pip --no-cache-dir install -r buildreqs/insurance-requirements.txt
 
 # Do we need to / want to create an ENTRYPOINT HERE?
 
