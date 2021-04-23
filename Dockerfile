@@ -38,6 +38,7 @@ RUN apt-get update && apt-get install -y \
         libffi-dev \
 	libpq-dev \
 	libpng-dev \
+    pkg-config \
 	libfreetype6-dev \
         python3.7-dev \
         chromium-chromedriver \
