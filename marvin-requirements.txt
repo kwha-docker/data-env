@@ -40,7 +40,7 @@ openpyxl==2.6.4
 pandas==0.25.3
 patsy==0.5.1
 pbr==1.8.1
-pdfminer.six==20201018
+pdfminer==20191125
 psutil==3.2.2
 psycopg2==2.7.4
 psycopg2-binary==2.7.4
