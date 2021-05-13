@@ -1,4 +1,4 @@
-FROM kwhadocker/ubuntu18-postgres11:v4
+FROM kwhadocker/ubuntu18-postgres11:v5
 
 # Move to root
 WORKDIR /root/
