@@ -1,4 +1,4 @@
-FROM kwhadocker/ubuntu18-postgres11:v4
+FROM kwhadocker/ubuntu18-postgres11:v5
 
 # Move to root
 WORKDIR /root/
@@ -40,15 +40,27 @@ RUN apt-get update && apt-get install -y \
     	libfreetype6-dev \
         python3.7-dev \
         chromium-chromedriver \
+        ghostscript \
         python3-tk \
         python3-pip \
+        libatlas-base-dev \
+        libblas3 \
+        liblapack3 \
+        liblapack-dev \
+        libblas-dev \
+        gfortran \
+        libjpeg-dev \
+        libfreetype6-dev \
+        libpng-dev \
+        libxml2-dev \
+        libxslt-dev \
+        pkg-config \
         tig \
         libgeos-c1v5 \
         libgeos-dev && \
     apt-get autoremove -y && \
     apt-get clean && \
-    rm -rf /var/lib/apt/lists/* && \
-    mkdir -p buildreqs/requirements
+    rm -rf /var/lib/apt/lists/*
 
 # Copy requirement files
 COPY marvin-requirements.txt buildreqs/marvin-requirements.txt
@@ -59,7 +71,7 @@ COPY pvsyst-extraction-requirements.txt buildreqs/pvsyst-extraction-requirements
 # New one will point to python3.7 so that's the version we'll get when running
 # `python`.
 # Note: This seems to work locally when connected to a docker container, but not
-# in the pythong commands run below, so they explicitly specify 'python3.7'.
+# in the python commands run below, so they explicitly specify 'python3.7'.
 RUN ln -f /usr/bin/python3.7  /usr/bin/python
 RUN python --version
 
@@ -69,13 +81,26 @@ RUN python3.7 -m pip install pip --upgrade
 
 
 # Install requirements
+RUN mkdir -p buildreqs/requirements
+
+# Install marvin requirements
 # Will also run buildreqs/marvin/requirements.txt since
 # the insurance requirements file will point to marvin file
 # This layer costs 1.28GB - not sure how to fix this issue.
 # explicitly install numpy first?
-RUN python3.7 -m pip install numpy==1.18.5
-RUN python3.7 -m pip --no-cache-dir install -r buildreqs/marvin-requirements.txt
-RUN python3.7 -m pip --no-cache-dir install -r buildreqs/insurance-requirements.txt
+RUN ln -s /usr/include/locale.h /usr/include/xlocale.h
+RUN python3.7 -m pip -install numpy==1.11.0
+
+# Install marvin requirements
+COPY marvin-requirements.txt buildreqs/marvin-requirements.txt
+# TODO remove legacy-resolver once we have stabilized our dependencies, see note above pip upgrade
+RUN python3.7 -m pip ---no-cache-dir install -r buildreqs/marvin-requirements.txt --use-deprecated=legacy-resolver
+
+# Install insurance requirements
+COPY insurance-requirements.txt buildreqs/insurance-requirements.txt
+RUN python3.7 -m pip ---no-cache-dir install -r buildreqs/insurance-requirements.txt
+
+COPY pvsyst-extraction-requirements.txt buildreqs/pvsyst-extraction-requirements.txt
 RUN python3.7 -m pip --no-cache-dir install -r buildreqs/pvsyst-extraction-requirements.txt
 
 # Do we need to / want to create an ENTRYPOINT HERE?
