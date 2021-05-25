@@ -75,35 +75,26 @@ COPY pvsyst-extraction-requirements.txt buildreqs/pvsyst-extraction-requirements
 RUN ln -f /usr/bin/python3.7  /usr/bin/python
 RUN python --version
 
-
 # update pip
 RUN python3.7 -m pip install pip --upgrade
 
-
-# Install requirements
-RUN mkdir -p buildreqs/requirements
-
-# Install marvin requirements
-# Will also run buildreqs/marvin/requirements.txt since
-# the insurance requirements file will point to marvin file
-# This layer costs 1.28GB - not sure how to fix this issue.
-# explicitly install numpy first?
+# required for arm architecture
 RUN ln -s /usr/include/locale.h /usr/include/xlocale.h
-RUN python3.7 -m pip -install numpy==1.11.0
+
+# Create requirements dir
+RUN mkdir -p buildreqs/
 
 # Install marvin requirements
 COPY marvin-requirements.txt buildreqs/marvin-requirements.txt
-# TODO remove legacy-resolver once we have stabilized our dependencies, see note above pip upgrade
-RUN python3.7 -m pip ---no-cache-dir install -r buildreqs/marvin-requirements.txt --use-deprecated=legacy-resolver
+RUN python3.7 -m pip ---no-cache-dir install -r buildreqs/marvin-requirements.txt
 
 # Install insurance requirements
 COPY insurance-requirements.txt buildreqs/insurance-requirements.txt
 RUN python3.7 -m pip ---no-cache-dir install -r buildreqs/insurance-requirements.txt
 
+# Install pvsyst-extraction requirements
 COPY pvsyst-extraction-requirements.txt buildreqs/pvsyst-extraction-requirements.txt
 RUN python3.7 -m pip --no-cache-dir install -r buildreqs/pvsyst-extraction-requirements.txt
-
-# Do we need to / want to create an ENTRYPOINT HERE?
 
 
 # Run bash on startup
