@@ -98,12 +98,14 @@ RUN python --version
 
 RUN mkdir -p buildreqs/requirements
 
+# necessary for arm builds
+RUN ln -s /usr/include/locale.h /usr/include/xlocale.h
+
 # Install marvin requirements
 # Will also run buildreqs/marvin/requirements.txt since
 # the insurance requirements file will point to marvin file
 # This layer costs 1.28GB - not sure how to fix this issue.
 # explicitly install numpy first?
-RUN ln -s /usr/include/locale.h /usr/include/xlocale.h
 RUN pip install numpy==1.11.0
 
 # Install marvin requirements
