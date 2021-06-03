@@ -76,7 +76,7 @@ RUN ln -f /usr/bin/python3.7  /usr/bin/python
 RUN python --version
 
 # update pip
-RUN python3.7 -m pip install pip --upgrade
+RUN python3.7 -m pip install pip==21.1.1
 
 # required for arm architecture
 RUN ln -s /usr/include/locale.h /usr/include/xlocale.h
@@ -86,15 +86,16 @@ RUN mkdir -p buildreqs/
 
 # Install marvin requirements
 COPY marvin-requirements.txt buildreqs/marvin-requirements.txt
-RUN python3.7 -m pip ---no-cache-dir install -r buildreqs/marvin-requirements.txt
+RUN python3.7 -m pip install cython numpy==1.18.4
+RUN python3.7 -m pip --no-cache-dir install -r buildreqs/marvin-requirements.txt --use-deprecated=legacy-resolver
 
 # Install insurance requirements
 COPY insurance-requirements.txt buildreqs/insurance-requirements.txt
-RUN python3.7 -m pip ---no-cache-dir install -r buildreqs/insurance-requirements.txt
+RUN python3.7 -m pip --no-cache-dir install -r buildreqs/insurance-requirements.txt --use-deprecated=legacy-resolver
 
 # Install pvsyst-extraction requirements
 COPY pvsyst-extraction-requirements.txt buildreqs/pvsyst-extraction-requirements.txt
-RUN python3.7 -m pip --no-cache-dir install -r buildreqs/pvsyst-extraction-requirements.txt
+RUN python3.7 -m pip --no-cache-dir install -r buildreqs/pvsyst-extraction-requirements.txt --use-deprecated=legacy-resolver
 
 
 # Run bash on startup
