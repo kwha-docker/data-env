@@ -1,4 +1,4 @@
-FROM kwhadocker/ubuntu18-postgres11:v4
+FROM kwhadocker/ubuntu18-postgres11:v5
 
 # Move to root
 WORKDIR /root/
@@ -38,20 +38,28 @@ RUN apt-get update && apt-get install -y \
         libffi-dev \
         python-dev \
         chromium-chromedriver \
+        ghostscript \
         python-tk \
         python3-tk \
         python-pip \
+        libatlas-base-dev \
+        libblas3 \
+        liblapack3 \
+        liblapack-dev \
+        libblas-dev \
+        gfortran \
+        libjpeg-dev \
+        libfreetype6-dev \
+        libpng-dev \
+        libxml2-dev \
+        libxslt-dev \
+        pkg-config \
         tig \
         libgeos-c1v5 \
         libgeos-dev && \
     apt-get autoremove -y && \
         apt-get clean && \
-        rm -rf /var/lib/apt/lists/* && \
-    mkdir -p buildreqs/requirements
-
-# Copy requirement files
-COPY marvin-requirements.txt buildreqs/marvin-requirements.txt
-COPY insurance-requirements.txt buildreqs/insurance-requirements.txt
+        rm -rf /var/lib/apt/lists/*
 
 # Python 3 setup
 # KE TODO do we need this python3 setup or can we just install it
@@ -88,14 +96,25 @@ RUN ln -f /usr/bin/python3.5  /usr/bin/python
 RUN python --version
 
 
-# Install requirements
+RUN mkdir -p buildreqs/requirements
+
+# necessary for arm builds
+RUN ln -s /usr/include/locale.h /usr/include/xlocale.h
+
+# Install marvin requirements
 # Will also run buildreqs/marvin/requirements.txt since
 # the insurance requirements file will point to marvin file
 # This layer costs 1.28GB - not sure how to fix this issue.
 # explicitly install numpy first?
-# TODO remove legacy-resolver once we have stabilized our dependencies, see note above pip upgrade
 RUN pip install numpy==1.11.0
+
+# Install marvin requirements
+COPY marvin-requirements.txt buildreqs/marvin-requirements.txt
+# TODO remove legacy-resolver once we have stabilized our dependencies, see note above pip upgrade
 RUN pip --no-cache-dir install -r buildreqs/marvin-requirements.txt --use-deprecated=legacy-resolver
+
+# Install insurance requirements
+COPY insurance-requirements.txt buildreqs/insurance-requirements.txt
 RUN pip --no-cache-dir install -r buildreqs/insurance-requirements.txt
 
 # Do we need to / want to create an ENTRYPOINT HERE?
