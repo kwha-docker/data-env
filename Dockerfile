@@ -33,6 +33,7 @@ RUN apt-get update && apt-get install -y \
         tmux \
         zsh \
         xfsprogs \
+        libcairo2-dev \
         libffi-dev \
     	libpq-dev \
     	libpng-dev \
@@ -48,6 +49,7 @@ RUN apt-get update && apt-get install -y \
         liblapack3 \
         liblapack-dev \
         libblas-dev \
+        libgirepository1.0-dev \
         gfortran \
         libjpeg-dev \
         libfreetype6-dev \
@@ -62,21 +64,15 @@ RUN apt-get update && apt-get install -y \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Copy requirement files
-COPY marvin-requirements.txt buildreqs/marvin-requirements.txt
-COPY insurance-requirements.txt buildreqs/insurance-requirements.txt
-COPY pvsyst-extraction-requirements.txt buildreqs/pvsyst-extraction-requirements.txt
-
 # `python` is /usr/bin/python, a symlink. Delete old symlink, make new one.
 # New one will point to python3.7 so that's the version we'll get when running
 # `python`.
 # Note: This seems to work locally when connected to a docker container, but not
 # in the python commands run below, so they explicitly specify 'python3.7'.
 RUN ln -f /usr/bin/python3.7  /usr/bin/python
-RUN python --version
 
 # update pip
-RUN python3.7 -m pip install pip==21.1.1
+RUN python3.7 -m pip install pip==21.1.2
 
 # required for arm architecture
 RUN ln -s /usr/include/locale.h /usr/include/xlocale.h
@@ -84,19 +80,14 @@ RUN ln -s /usr/include/locale.h /usr/include/xlocale.h
 # Create requirements dir
 RUN mkdir -p buildreqs/
 
-# Install marvin requirements
-COPY marvin-requirements.txt buildreqs/marvin-requirements.txt
+# Required to be installed first in order to build pandas
 RUN python3.7 -m pip install cython numpy==1.18.4
-RUN python3.7 -m pip --no-cache-dir install -r buildreqs/marvin-requirements.txt --use-deprecated=legacy-resolver
 
-# Install insurance requirements
-COPY insurance-requirements.txt buildreqs/insurance-requirements.txt
-RUN python3.7 -m pip --no-cache-dir install -r buildreqs/insurance-requirements.txt --use-deprecated=legacy-resolver
+# Copy requirements over just before installing, so previous steps will still be cached
+COPY all-requirements.txt buildreqs/all-requirements.txt
 
-# Install pvsyst-extraction requirements
-COPY pvsyst-extraction-requirements.txt buildreqs/pvsyst-extraction-requirements.txt
-RUN python3.7 -m pip --no-cache-dir install -r buildreqs/pvsyst-extraction-requirements.txt --use-deprecated=legacy-resolver
-
+# Install marvin requirements
+RUN python3.7 -m pip --no-cache-dir install -r buildreqs/all-requirements.txt
 
 # Run bash on startup
 CMD ["/bin/bash"]
