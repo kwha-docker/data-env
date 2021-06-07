@@ -77,20 +77,20 @@ RUN ln -f /usr/bin/python3.9  /usr/bin/python
 RUN python --version
 
 # update pip
-RUN pip3 install pip --upgrade
+RUN python3.9 -m pip install pip==21.1.2
 
 # required for arm architecture
 RUN ln -s /usr/include/locale.h /usr/include/xlocale.h
 
 # Install marvin requirements
-RUN pip3 install numpy==1.18.5
-RUN pip3 install -r buildreqs/marvin-requirements.txt
+RUN python3.9 -m pip install numpy==1.20.3
+RUN python3.9 -m pip install -r buildreqs/marvin-requirements.txt
 
 # Install insurance requirements
-RUN pip3 install -r buildreqs/insurance-requirements.txt
+RUN python3.9 -m pip install -r buildreqs/insurance-requirements.txt
 
 # Install pvsyst-extraction requirements
-RUN pip3 install -r buildreqs/pvsyst-extraction-requirements.txt
+RUN python3.9 -m pip install -r buildreqs/pvsyst-extraction-requirements.txt
 
 
 # Run bash on startup
