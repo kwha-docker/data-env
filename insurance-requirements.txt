@@ -58,7 +58,7 @@ logilab-common==0.62.1
 Mako==1.0.1
 Markdown==3.2.2
 MarkupSafe==0.23
-matplotlib==1.5.3
+matplotlib==3.4.2
 mccabe==0.6.1
 memory-profiler==0.38
 mistune==0.8.4
