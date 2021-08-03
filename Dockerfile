@@ -74,6 +74,7 @@ RUN python3.7 -m pip install pip --upgrade
 # This layer costs 1.28GB - not sure how to fix this issue.
 # explicitly install numpy first?
 RUN python3.7 -m pip install numpy==1.18.5
+RUN python3.7 -m pip install matplotlib==3.4.2
 RUN python3.7 -m pip --no-cache-dir install -r buildreqs/marvin-requirements.txt
 RUN python3.7 -m pip --no-cache-dir install -r buildreqs/insurance-requirements.txt
 RUN python3.7 -m pip --no-cache-dir install -r buildreqs/pvsyst-extraction-requirements.txt
