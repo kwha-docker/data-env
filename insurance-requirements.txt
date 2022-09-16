@@ -55,7 +55,7 @@ jupyter-client==5.2.4
 jupyter-console==5.2.0
 jupyter-core==4.4.0
 logilab-common==0.62.1
-Mako==1.0.1
+Mako==1.2.2
 Markdown==3.2.2
 MarkupSafe==0.23
 matplotlib==1.5.3
